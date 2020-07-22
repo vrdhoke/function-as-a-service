@@ -28,12 +28,20 @@ exports.handler = function (event, context, callback) {
       ToAddresses: [email],
     },
     Message: {
-      Body: {
-        Html: {
-          Data:
-            "Password Reset Link:http://prod.vaibhavdhoke.me/reset?email="+email+"&token="+DBParams.Item.token},
-      },
-      Subject: { Data: "Password Reset" },
+        Body: {
+            Html: {
+              Data:
+                "\n Dear User, A request has been received to reset the password. Please click on the below link to reset the password. The link will expire in 15 minutes \n" +
+                "<a href='http://prod.vaibhavdhoke.me/reset?email=" +
+                email +
+                "&token=" +
+                DBParams.Item.token +
+                "'</a>http://prod.vaibhavdhoke.me/reset?email=" +
+                email +
+                "&token=" +
+                DBParams.Item.token}
+          },
+          Subject: { Data: "User Account: Password Reset" },
     },
   };
 
