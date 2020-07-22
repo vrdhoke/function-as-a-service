@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Copy zip file to s3 bucket for deployment
           command: |
-            aws s3 cp lambdafunction-${CIRCLE_BUILD_NUM}.zip s3://${S3_CodeDeployment_Bucket} --region ${aws_region}
+            aws s3 cp lambdafunction-${CIRCLE_BUILD_NUM}.zip s3://${S3_CODEDEPLOYMENT_BUCKET} --region ${aws_region}
       - run:
           name: Update Lambda function
           command: |
