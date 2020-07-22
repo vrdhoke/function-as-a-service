@@ -16,7 +16,7 @@ exports.handler = function (event, context, callback) {
   const DBParams = {
     TableName: "csye6225",
     Item: {
-      email: email,
+      id: email,
       token: uuidv4(),
       TimeToLive: expirationTime,
     },
@@ -29,7 +29,7 @@ exports.handler = function (event, context, callback) {
     },
     Message: {
       Body: {
-        Text: {
+        Html: {
           Data:
             "Password Reset Link:http://prod.vaibhavdhoke.me/reset?email="+email+"&token="+DBParams.Item.token},
       },
@@ -40,7 +40,7 @@ exports.handler = function (event, context, callback) {
   var params = {
     TableName: "csye6225",
     Key: {
-      email: email,
+      id: email,
     },
   };
 
