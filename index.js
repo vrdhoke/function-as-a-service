@@ -32,14 +32,7 @@ exports.handler = function (event, context, callback) {
             Html: {
               Data:
                 "\n Dear User, A request has been received to reset the password. Please click on the below link to reset the password. The link will expire in 15 minutes \n" +
-                "<a href='http://prod.vaibhavdhoke.me/reset?email=" +
-                email +
-                "&token=" +
-                DBParams.Item.token +
-                "'</a>http://prod.vaibhavdhoke.me/reset?email=" +
-                email +
-                "&token=" +
-                DBParams.Item.token}
+                "http://prod.vaibhavdhoke.me/reset?email=" +email+"&token="+DBParams.Item.token}
           },
           Subject: { Data: "User Account: Password Reset" },
     },
