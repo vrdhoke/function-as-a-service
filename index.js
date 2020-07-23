@@ -24,7 +24,7 @@ exports.handler = function (event, context, callback) {
   };
 
   const emailParams = {
-    Source: "book@prod.vaibhavdhoke.me",
+    Source: "bookstore@prod.vaibhavdhoke.me",
     Destination: {
       ToAddresses: [senderemail],
     },
