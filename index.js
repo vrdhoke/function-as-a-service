@@ -39,17 +39,17 @@ exports.handler = function (event, context, callback) {
     },
   };
 
-  var params = {
+  var queryparams = {
     TableName: "csye6225",
     Key: {
-      id: senderemail,
+      id: senderemail
     },
   };
 
-  documentClient.get(params, function (err, data) {
+  documentClient.get(queryparams, function (err, data) {
     if (err) {
       console.error(
-        "Unable to read item. Error JSON:",
+        "Unable to read item from dynamodb table. Error JSON:",
         JSON.stringify(err, null, 2)
       );
     } else {
@@ -63,10 +63,14 @@ exports.handler = function (event, context, callback) {
               console.log(err);
             } else {
               console.log(data);
-              console.log("email sent successfully");
+              console.log("Email sent successfully to "+senderemail);
               documentClient.put(DBParams, function (err, data) {
-                if (err) console.log(err);
-                else console.log(data);
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(data);
+                }
               });
             }
           });
@@ -78,10 +82,14 @@ exports.handler = function (event, context, callback) {
             console.log(err);
           } else {
             console.log(data);
-            console.log("email sent successfully");
+            console.log("Email sent successfully to "+senderemail);
             documentClient.put(DBParams, function (err, data) {
-              if (err) console.log(err);
-              else console.log(data);
+              if (err) {
+                  console.log(err);
+                }
+              else {
+                  console.log(data);
+                }
             });
           }
         });
