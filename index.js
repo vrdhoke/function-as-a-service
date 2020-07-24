@@ -6,10 +6,10 @@ const documentClient = new aws.DynamoDB.DocumentClient({ region: region });
 
 exports.handler = function (event, context, callback) {
   var snsmessage = event.Records[0].Sns.Message;
-  var json = JSON.parse(snsmessage);
-  const senderemail = json.email;
+  var jsonmsg = JSON.parse(snsmessage);
+  const senderemail = jsonmsg.email;
 
-  const offsettime = 2 * 60;
+  const offsettime = 15 * 60;
   const presentTime = Math.round(Date.now() / 1000);
   const expirationTime = presentTime + offsettime;
   const currentTime = Math.round(Date.now() / 1000);
@@ -25,9 +25,7 @@ exports.handler = function (event, context, callback) {
 
   const emailParams = {
     Source: "bookstore@prod.vaibhavdhoke.me",
-    Destination: {
-      ToAddresses: [senderemail],
-    },
+    Destination: {ToAddresses: [senderemail]},
     Message: {
         Body: {
             Html: {
@@ -48,10 +46,8 @@ exports.handler = function (event, context, callback) {
 
   documentClient.get(queryparams, function (err, data) {
     if (err) {
-      console.error(
-        "Unable to read item from dynamodb table. Error JSON:",
-        JSON.stringify(err, null, 2)
-      );
+        console.log("Error while reading the data from DynamoDB table");
+        console.log(err);
     } else {
       if (data.Item) {
         if (data.Item.TimeToLive > currentTime) {
@@ -61,15 +57,18 @@ exports.handler = function (event, context, callback) {
             callback(null, { err: err, data: data });
             if (err) {
               console.log(err);
+              console.log("Error while sending the email through SES");
             } else {
               console.log(data);
               console.log("Email sent successfully to "+senderemail);
               documentClient.put(DBParams, function (err, data) {
                 if (err) {
                     console.log(err);
+                    console.log("Error while storing the token in dynamoDB table");
                 }
                 else {
                     console.log(data);
+                    console.log("Token Successfully stored in dynamoDB table");
                 }
               });
             }
@@ -80,15 +79,18 @@ exports.handler = function (event, context, callback) {
           callback(null, { err: err, data: data });
           if (err) {
             console.log(err);
+            console.log("Error while sending the email through SES");
           } else {
             console.log(data);
             console.log("Email sent successfully to "+senderemail);
             documentClient.put(DBParams, function (err, data) {
               if (err) {
                   console.log(err);
+                  console.log("Error while storing the token in dynamoDB table");
                 }
               else {
                   console.log(data);
+                  console.log("Token Successfully stored in dynamoDB table");
                 }
             });
           }

@@ -22,7 +22,7 @@ jobs:
             ls -al
             zip -r lambdafunction-${CIRCLE_BUILD_NUM}.zip index.js node_modules package.json
       - run:
-          name: Copy zip file to s3 bucket for deployment
+          name: Copy lamnda function zip file into s3 for lambda function update
           command: |
             aws s3 cp lambdafunction-${CIRCLE_BUILD_NUM}.zip s3://${S3_CODEDEPLOYMENT_BUCKET} --region ${aws_region}
       - run:
