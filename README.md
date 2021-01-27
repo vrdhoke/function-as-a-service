@@ -1,4 +1,4 @@
-# faas
+# function as a service
 
 # Serverless computing of Lambda Function
 
